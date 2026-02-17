@@ -30,10 +30,10 @@
       # ── Git identity ──────────────────────────────────────────
       programs.git = {
         enable    = true;
-        userName  = "nicostav";
-        userEmail = "you@example.com";   # TO_CHANGE
 
-        extraConfig = {
+        settings = {
+          userName  = "nicostav";
+          userEmail = "you@example.com";   # TO_CHANGE
           init.defaultBranch = "main";
           pull.rebase         = true;
           push.autoSetupRemote = true;
