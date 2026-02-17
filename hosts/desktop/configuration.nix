@@ -21,8 +21,9 @@
   networking.hostName = "nixos-desktop";
 
   # ── Boot ────────────────────────────────────────────────────
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
 
   # ── Hardware ────────────────────────────────────────────────
   # Adjust these to match your actual hardware.
@@ -68,6 +69,11 @@
     extraGroups = [ "wheel" "networkmanager" "audio" "video" ];
     shell = pkgs.zsh;
   };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+  ];
+
 
   # ── This value pins the NixOS version for stateful options.
   # Do NOT change this after first install.

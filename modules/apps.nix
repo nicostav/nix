@@ -10,6 +10,7 @@
 
     # ── Terminal emulator ──────────────────────────────────────
     kitty
+    wezterm
 
     # ── Email ─────────────────────────────────────────────────
     thunderbird
@@ -17,7 +18,7 @@
     # ── Editor ────────────────────────────────────────────────
     sublime4          # requires allowUnfree = true (set in base.nix)
     neovim
-    notion-app
+    # notion-app
     trilium-desktop
 
     # ── Productivity ──────────────────────────────────────────

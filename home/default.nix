@@ -88,7 +88,7 @@
               owner  = "joshskidmore";
               repo   = "zsh-fzf-history-search";
               rev    = "d1aae98";
-              sha256 = "sha256-4Dp2ehZLO83NhdBOKV0BhYFIvieaZPqiZZZtxsXz6/s=";
+              sha256 = "sha256-4Dp2ehZLO83NhdBOKV0BhYFIvieaZPqiZZZtxsXWRaQ=";
             };
           }
         ];
