@@ -14,6 +14,7 @@
     gh             # GitHub CLI (gh auth login, gh pr create, etc.)
     lazygit        # fantastic TUI git client — highly recommended
     delta          # beautiful git diffs (configured in home.nix)
+    git-crypt
   ];
 
   # Enable git-lfs globally

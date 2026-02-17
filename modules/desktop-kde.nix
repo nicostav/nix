@@ -12,7 +12,7 @@
   services.xserver = {
     enable = true;
     xkb = {
-      layout  = "us";   # change to your keyboard layout, e.g. "de"
+      layout  = "ch";   # change to your keyboard layout, e.g. "de"
       variant = "";
     };
   };
@@ -31,11 +31,6 @@
 
   # ── KDE-friendly extras ─────────────────────────────────────
   programs.dconf.enable = true;   # needed for some GTK apps inside KDE
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-kde ];
-  };
 
   environment.systemPackages = with pkgs; [
     # Plasma addons worth having from day one

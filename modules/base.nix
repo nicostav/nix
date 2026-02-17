@@ -17,13 +17,7 @@
 
   # ── Locale & timezone ───────────────────────────────────────
   # Adjust to your timezone: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time.timeZone = "Europe/Berlin";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_TIME     = "en_GB.UTF-8";  # 24h clock
-    LC_MONETARY = "en_US.UTF-8";
-  };
+  time.timeZone = "Europe/Zurich";
 
   # ── Networking ──────────────────────────────────────────────
   networking.networkmanager.enable = true;
@@ -34,9 +28,10 @@
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       liberation_ttf
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.fira-code
     ];
     fontconfig.defaultFonts = {
       serif      = [ "Noto Serif" ];
@@ -56,7 +51,10 @@
     pciutils     # lspci
     usbutils     # lsusb
     man-pages
+    gnupg
   ];
+
+  programs.gnupg.agent.enable = true;
 
   # ── Misc services ───────────────────────────────────────────
   services.openssh.enable = false;  # flip to true if you need SSH in

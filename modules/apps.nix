@@ -16,12 +16,18 @@
 
     # ── Editor ────────────────────────────────────────────────
     sublime4          # requires allowUnfree = true (set in base.nix)
+    neovim
+    notion-app
+    trilium-desktop
 
     # ── Productivity ──────────────────────────────────────────
     libreoffice-qt    # Qt-native build fits better inside KDE
 
+    # ── Spotify ───────────────────────────────────────────────
+    spotify
+    spotify-tray
+
     # ── Utilities ─────────────────────────────────────────────
-    eza               # modern `ls` replacement (successor to exa)
     bat               # `cat` with syntax highlighting
     fd                # fast `find` replacement
     ripgrep           # fast `grep` replacement
@@ -30,7 +36,11 @@
     tldr              # quick command examples
     jq                # JSON processor
     btop              # fancy system monitor
-
+    synology-drive-client
+    cryptomator
+    portfolio
+    threema-desktop
+    wireguard-ui
   ];
 
   # ── Zen Browser ─────────────────────────────────────────────
@@ -53,7 +63,7 @@
 
   # ── Flatpak (escape hatch for apps not yet in nixpkgs) ──────
   # Useful for things like Zen while packaging catches up.
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
 
   # ── AppImage support ────────────────────────────────────────
   programs.appimage = {

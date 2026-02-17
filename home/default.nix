@@ -3,9 +3,11 @@
 # Home-Manager configuration — per-user, per-machine settings.
 # This is where dotfiles and program config live in a
 # declarative, reproducible way.
-#
+
+
+# ============================================================
 # Setup (one-time):
-#   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
+#   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
 #   sudo nix-channel --update
 #   # Then add home-manager module to imports in configuration.nix:
 #   # <home-manager/nixos>
@@ -21,15 +23,15 @@
     useGlobalPkgs   = true;   # share the system nixpkgs instance
     useUserPackages = true;   # install home-manager packages into system profile
 
-    users.yourname = { pkgs, ... }: {   # ← change "yourname"
+    users.yourname = { pkgs, ... }: {   # TO_CHANGE
 
-      home.stateVersion = "24.11";      # must match system.stateVersion
+      home.stateVersion = "25.11";      # must match system.stateVersion
 
       # ── Git identity ──────────────────────────────────────────
       programs.git = {
         enable    = true;
-        userName  = "Your Name";         # ← change
-        userEmail = "you@example.com";   # ← change
+        userName  = "nicostav";
+        userEmail = "you@example.com";   # TO_CHANGE
 
         extraConfig = {
           init.defaultBranch = "main";
@@ -93,36 +95,19 @@
 
         # Aliases
         shellAliases = {
-          # Navigation
-          ".."  = "cd ..";
-          "..." = "cd ../..";
-
           # Better defaults
-          ls    = "eza --icons --group-directories-first";
-          ll    = "eza -la --icons --group-directories-first";
+          ll    = "ls -lsa";
           lt    = "eza --tree --icons --level=2";
           cat   = "bat";
           grep  = "rg";
           find  = "fd";
           cd    = "z";          # zoxide smarter cd
 
-          # Git shortcuts (lazygit is lg)
-          g     = "git";
-          ga    = "git add";
-          gc    = "git commit";
-          gp    = "git push";
-          gpl   = "git pull";
-          gs    = "git status";
-          gd    = "git diff";
-          lg    = "lazygit";
-
-          # NixOS
-          nrs   = "sudo nixos-rebuild switch";
-          nrt   = "sudo nixos-rebuild test";
-          nfu   = "sudo nix-channel --update";
-
           # Kitty
           icat  = "kitty +kitten icat";   # display images in terminal
+
+          # Nvim
+          nvimm = "nvim .";
         };
 
         # Commands run for every interactive shell
