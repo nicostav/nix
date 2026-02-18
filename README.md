@@ -66,15 +66,37 @@ This creates `/mnt/etc/nixos/hardware-configuration.nix` and a stub
 ### 4. Clone this repo onto the new system
 
 ```bash
-sudo nix-shell -p git
-git clone <your-repo-url> /mnt/etc/nixos/nixos-config
+sudo nix-shell -p git git-crypt gnupg
+git clone <your-repo-url> /mnt/etc/nixos/nix
+```
+
+To decrypt the encrypted files the GPG key has to be imported
+```bash
+# Import the key
+gpg --import /path/to/gpg-private.asc
+
+# In the GPG prompt, trust the key
+gpg> trust
+# Choose 5 (ultimate trust)
+gpg> quit
+
+# Securely delete the key file
+shred -u /path/to/gpg-private.asc
+```
+
+Unlock the cloned git repo
+```bash
+# Unlock
+git-crypt unlock
+
+# When prompted enter the password for the GPG key
 ```
 
 ### 5. Copy hardware config into the repo
 
 ```bash
 cp /mnt/etc/nixos/hardware-configuration.nix \
-   /mnt/etc/nixos/nixos-config/hosts/desktop/
+   /mnt/etc/nixos/nix/hosts/desktop/
 ```
 
 ### 6. Set up the channels
@@ -105,8 +127,7 @@ Before rebuilding, open the files and change:
 | File | What to change |
 |------|---------------|
 | `hosts/desktop/configuration.nix` | hostname, GPU section, username |
-| `modules/base.nix` | timezone, locale, keyboard layout |
-| `home/default.nix` | `yourname`, git name, git email |
+| `home/default.nix` | username |
 
 ### 9. Install!
 
@@ -117,75 +138,25 @@ sudo reboot
 
 ---
 
-## Day-to-Day Usage
+### 10. Pushing new Configuration
 
+When changing or adding files, check if they are commited encrypted
 ```bash
-# Apply changes after editing any .nix file:
-sudo nixos-rebuild switch
+# Check the status of the files
+git-crypt status
 
-# Test a change without making it the boot default:
-sudo nixos-rebuild test
+# If some files that should get encrypted are not show as that force the encryption
+git-crypt status -f
 
-# Roll back to the previous generation:
-sudo nixos-rollback
+# Add new or changed files
+git add <changes-done>
 
-# Update all channels and rebuild:
-sudo nix-channel --update && sudo nixos-rebuild switch
+# Commit change
+git commit -m "Message"
 
-# List generations (bootloader entries):
-sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
-
-# Garbage collect old generations (free disk space):
-sudo nix-collect-garbage -d
+# Push
+git push origin main
 ```
 
 ---
 
-## Adding the Notebook Later
-
-1. Copy the desktop host directory: `cp -r hosts/desktop hosts/notebook`
-2. Copy *that machine's* `hardware-configuration.nix` into `hosts/notebook/`
-3. Edit `hosts/notebook/configuration.nix`:
-   - Change `networking.hostName`
-   - Adjust GPU/hardware sections
-   - Optionally import a `modules/power.nix` with TLP/auto-cpufreq
-4. On the notebook, symlink `/etc/nixos/configuration.nix` to
-   `hosts/notebook/configuration.nix`
-
-Modules in `modules/` are automatically shared between both machines —
-any change to `base.nix` or `apps.nix` applies everywhere on next rebuild.
-
----
-
-## Zen Browser
-
-Zen is not in nixpkgs mainline yet. Easiest options:
-
-**Option A — Flatpak** (works today, no config needed):
-```bash
-flatpak install flathub app.zen_browser.zen
-```
-
-**Option B — Community overlay** (nix-native, slightly more setup):
-```
-# In configuration.nix imports, add the overlay channel and
-# uncomment the zen-browser line in modules/apps.nix
-```
-
-**Option C — Migrate to flakes** when you're ready. The Zen flake at
-`github:youwen5/zen-browser-flake` is the cleanest nix-native solution.
-
----
-
-## Migrating to Flakes Later
-
-When you're comfortable and want flakes:
-
-1. Run `nix flake init` in the repo root
-2. Move channel references into `inputs` in `flake.nix`
-3. Replace `<nixpkgs>` and `<home-manager>` angle-bracket imports with
-   flake input references
-4. The module structure (`hosts/`, `modules/`, `home/`) stays identical
-
-The separation of concerns this layout enforces makes that migration
-straightforward — no restructuring needed.
