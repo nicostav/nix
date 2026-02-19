@@ -8,7 +8,7 @@ No flakes required — easy to understand, easy to migrate to flakes later.
 ## Directory Structure
 
 ```
-nixos-config/
+nix/
 ├── hosts/
 │   ├── desktop/
 │   │   ├── configuration.nix      ← machine entry point (symlink /etc/nixos/configuration.nix here)
@@ -103,21 +103,18 @@ cp /mnt/etc/nixos/hardware-configuration.nix \
 
 ```bash
 # NixOS (should already be set if using the installer):
-sudo nix-channel --add https://nixos.org/channels/nixos-24.11 nixos
+sudo nix-channel --add https://nixos.org/channels/nixos-25.11 nixos
 sudo nix-channel --update
 
 # home-manager (must match NixOS release):
-sudo nix-channel --add \
-  https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz \
-  home-manager
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
 sudo nix-channel --update
 ```
 
 ### 7. Point /etc/nixos/configuration.nix at your host config
 
 ```bash
-sudo ln -sf /etc/nixos/nixos-config/hosts/desktop/configuration.nix \
-            /etc/nixos/configuration.nix
+sudo ln -sf /etc/nixos/nix/hosts/desktop/configuration.nix /etc/nixos/configuration.nix
 ```
 
 ### 8. Edit the config for your machine
