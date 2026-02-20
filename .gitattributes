@@ -4,3 +4,5 @@
 home/** filter=git-crypt diff=git-crypt
 hosts/** filter=git-crypt diff=git-crypt
 modules/** filter=git-crypt diff=git-crypt
+flake.nix filter=git-crypt diff=git-crypt
+flake.lock filter=git-crypt diff=git-crypt
