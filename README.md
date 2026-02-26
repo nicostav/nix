@@ -38,8 +38,9 @@ No flakes required — easy to understand, easy to migrate to flakes later.
 ├── home/
 │   └── default.nix                ← home-manager: dotfiles, per-user config
 │
-└── wallpaper/                     ← wallpapers
-    └── forest.jpg
+└── assets/
+    └── wallpaper/                 ← wallpapers
+        └── forest.jpg
 
 ```
 
